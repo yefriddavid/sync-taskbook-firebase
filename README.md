@@ -5,6 +5,13 @@ This GNU solution allow you to up taskbook data to firebase to keep your data in
 
 
 
+### How to run this project
+
+```
+./main FirebaseProjectName TagName
+```
+
+
 ```
 https://firebase.google.com/docs/firestore/quickstart
 https://console.firebase.google.com/project/taskbook-18035/database/firestore/data~2Ftasks~2FhM0df1xScFy4Tjrxvie5

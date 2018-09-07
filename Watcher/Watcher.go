@@ -2,13 +2,15 @@ package Watcher
 
 import (
 	"log"
-	"os/user"
+	//"fmt"
+	Utils "../Utils"
+	Reader "../Reader"
 	"github.com/fsnotify/fsnotify"
 )
 
-type fn func()
+type fn func(Resources []Utils.Resource, filePath string)
 
-func Start(doMethod fn) {
+func Start(doMethod fn, dir string) {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		log.Fatal(err)
@@ -19,15 +21,13 @@ func Start(doMethod fn) {
 	go func() {
 		for {
 			select {
-			case _ , ok := <-watcher.Events:
+			case event, ok := <-watcher.Events:
 				if !ok {
 					return
 				}
-				//log.Println("event:", event)
-				doMethod()
-				/*if event.Op&fsnotify.Write == fsnotify.Write {
-					log.Println("modified file:", event.Name)
-				}*/
+				//fmt.Println(event.Name)
+				data := Reader.GetResourceData(event.Name)
+				doMethod(data, event.Name)
 			case err, ok := <-watcher.Errors:
 				if !ok {
 					return
@@ -37,9 +37,7 @@ func Start(doMethod fn) {
 		}
 	}()
 
-	usr, _ := user.Current()
-	//err = watcher.Add("/home/david/.taskbook/storage")
-	err = watcher.Add(usr.HomeDir + "/.taskbook/storage")
+	err = watcher.Add(dir)
 	if err != nil {
 		log.Fatal(err)
 	}

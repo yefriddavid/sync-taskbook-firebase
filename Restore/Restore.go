@@ -1,45 +1,41 @@
-package Restore
+package Remitter
 
 import (
-	Utils "../Utils"
-	"fmt"
+  "fmt"
 	"google.golang.org/api/option"
 	"golang.org/x/net/context"
 	"log"
+	//Utils "../Utils"
 	"firebase.google.com/go"
 	"firebase.google.com/go/db"
+	"os/user"
 )
 
-func Start(data map[string]Utils.Resource, targetName string, serverUrl string) bool{
-  fmt.Printl("Aca recivo data")
-	var key string
-	var ref *db.ref = client.newref("/" + targetname)
-	ctx := context.background()
-	conf := &firebase.config{
-		databaseurl: serverurl,
-	}
-	opt := option.withcredentialsfile("./serviceaccountkey.json")
-	app, err := firebase.newapp(ctx, conf, opt)
-	if err != nil {
-		log.fatalln("error initializing app:", err)
+
+func Start(targetName string, serverUrl string) bool{
+	ctx := context.Background()
+	conf := &firebase.Config{
+		DatabaseURL: serverUrl,
 	}
 
-	client, err := app.database(ctx)
+	usr, _ := user.Current()
+	opt := option.WithCredentialsFile(usr.HomeDir + "/.ssh/serviceAccountKey-taskbook.json")
+	app, err := firebase.NewApp(ctx, conf, opt)
 	if err != nil {
-		log.fatalln("error initializing database client:", err)
+		log.Fatalln("Error initializing app:", err)
 	}
 
-	ref.delete(ctx)
-	for item, row := range data{
-		fmt.println(item)
-		key = item
-		var usersref *db.ref= ref.child(key)
-		err = usersref.set(ctx, row)
+	client, err := app.Database(ctx)
+	if err != nil {
+		log.Fatalln("Error initializing database client:", err)
 	}
 
-	if err != nil {
-		log.fatalln("error setting value:", err)
-	}
+	var ref *db.Ref = client.NewRef("/" + targetName)
+  fmt.Println("----")
+  fmt.Print(ref)
+
+
 	return true
 
 }
+

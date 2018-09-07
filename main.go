@@ -6,7 +6,8 @@ import (
 	"os"
 	"path/filepath"
 	"fmt"
-	Sync "./Sync"
+	//Sync "./Sync"
+	//Restore "./Restore"
 	Utils "./Utils"
 	Remitter "./Remitter"
 	Watcher "./Watcher"
@@ -15,8 +16,8 @@ import (
 
 func main(){
 	usr, _ := user.Current()
-	fmt.Println(usr.HomeDir)
-	Sync.Start()
+	//fmt.Println(usr.HomeDir)
+	//Restore.Start()
 
   if (len(os.Args) > 1){
 		Utils.ServerUrl = fmt.Sprintf(Utils.ServerUrl, os.Args[1])
@@ -34,7 +35,3 @@ func SendDataServer(Resources map[string]Utils.Resource, filePath string){
   Remitter.SendDataToServer(Resources, targetName + "_" + Utils.Tag, Utils.ServerUrl)
 }
 
-/*func onArchiveDataChange(Resources map[string]Utils.Resource, filePath string){
-	var targetName string = filepath.Base(filepath.Dir(filePath))
-	Remitter.SendDataToServer(Resources, targetName + "_" + Utils.Tag, Utils.ServerUrl)
-}*/

@@ -8,7 +8,7 @@ This GNU solution allow you to up taskbook data to firebase to keep your data in
 
 Create an authentication file in **firebase** serviceAccountKey.json and put in ~/.ssh/keys/serviceAccountKey-taskbook.json
 
-Create your firebase project https://console.firebase.google.com/
+Create your firebase project here https://console.firebase.google.com/
 
 ### How to run this project
 

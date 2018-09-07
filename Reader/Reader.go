@@ -3,7 +3,7 @@ package Reader
 
 import (
 	"os"
-	//"fmt"
+	"os/user"
 	"encoding/json"
 	"io/ioutil"
 )
@@ -16,11 +16,13 @@ type Resource struct {
 	IsStarred bool `json:"isStarred"`
 	_isTask bool `json:"_isTask"`
 	IsComplete bool `json:"isComplete"`
+	Boards []string `json:"boards"`
 	Priority int `json:"priority"`
 }
 
 func GetResourceData() []Resource{
-	jsonFile, _ := os.Open("/home/david/.taskbook/storage/storage.json")
+	usr, _ := user.Current()
+	jsonFile, _ := os.Open(usr.HomeDir + "/.taskbook/storage/storage.json")
 	/*if err != nil {
 		fmt.Println(err)
 	}*/

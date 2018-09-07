@@ -2,6 +2,7 @@ package Watcher
 
 import (
 	"log"
+	"os/user"
 	"github.com/fsnotify/fsnotify"
 )
 
@@ -36,7 +37,9 @@ func Start(doMethod fn) {
 		}
 	}()
 
-	err = watcher.Add("/home/david/.taskbook/storage")
+	usr, _ := user.Current()
+	//err = watcher.Add("/home/david/.taskbook/storage")
+	err = watcher.Add(usr.HomeDir + "/.taskbook/storage")
 	if err != nil {
 		log.Fatal(err)
 	}

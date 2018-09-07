@@ -1,7 +1,9 @@
 package Utils
 
-var Tag string = "Personal"
-var ServerUrl string = "Personal"
+var Tag string = "Sync"
+var FirebaseProject string = "sync-00000"
+var ServerUrl string = "https://%s.firebaseio.com"
+
 
 
 type Resource struct {
@@ -10,7 +12,7 @@ type Resource struct {
 	Tmestamp int `json:"_timestamp"`
 	Description string `json:"description"`
 	IsStarred bool `json:"isStarred"`
-	_isTask bool `json:"_isTask"`
+	IsTask bool `json:"_isTask"`
 	IsComplete bool `json:"isComplete"`
 	Boards []string `json:"boards"`
 	Priority int `json:"priority"`

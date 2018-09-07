@@ -8,7 +8,7 @@ import (
 	"github.com/fsnotify/fsnotify"
 )
 
-type fn func(Resources []Utils.Resource, filePath string)
+type fn func(Resources map[string]Utils.Resource, filePath string)
 
 func Start(doMethod fn, dir string) {
 	watcher, err := fsnotify.NewWatcher()

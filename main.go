@@ -3,8 +3,10 @@ package main
 
 import (
 	"os/user"
+	"os"
 	"path/filepath"
-	//"fmt"
+	"fmt"
+	Sync "./Sync"
 	Utils "./Utils"
 	Remitter "./Remitter"
 	Watcher "./Watcher"
@@ -13,16 +15,26 @@ import (
 
 func main(){
 	usr, _ := user.Current()
-	go Watcher.Start(onStorageDataChange, usr.HomeDir + "/.taskbook/storage")
-	Watcher.Start(onArchiveDataChange, usr.HomeDir + "/.taskbook/archive")
+	fmt.Println(usr.HomeDir)
+	Sync.Start()
+
+  if (len(os.Args) > 1){
+		Utils.ServerUrl = fmt.Sprintf(Utils.ServerUrl, os.Args[1])
+  }
+	if (len(os.Args) > 2){
+		Utils.Tag = os.Args[2]
+  }
+
+	go Watcher.Start(SendDataServer, usr.HomeDir + "/.taskbook/storage")
+	Watcher.Start(SendDataServer, usr.HomeDir + "/.taskbook/archive")
 }
 
-func onStorageDataChange(Resources []Utils.Resource, filePath string){
-	var targetName string = filepath.Base(filepath.Dir(filePath))
-	Remitter.SendDataToServer(Resources, targetName + "_" + Utils.Tag)
+func SendDataServer(Resources map[string]Utils.Resource, filePath string){
+  var targetName string = filepath.Base(filepath.Dir(filePath))
+  Remitter.SendDataToServer(Resources, targetName + "_" + Utils.Tag, Utils.ServerUrl)
 }
 
-func onArchiveDataChange(Resources []Utils.Resource, filePath string){
+/*func onArchiveDataChange(Resources map[string]Utils.Resource, filePath string){
 	var targetName string = filepath.Base(filepath.Dir(filePath))
-	Remitter.SendDataToServer(Resources, targetName + "_" + Utils.Tag)
-}
+	Remitter.SendDataToServer(Resources, targetName + "_" + Utils.Tag, Utils.ServerUrl)
+}*/

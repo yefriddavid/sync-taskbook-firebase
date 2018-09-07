@@ -9,6 +9,7 @@ import (
 	Utils "../Utils"
 	"firebase.google.com/go"
 	"firebase.google.com/go/db"
+	"os/user"
 )
 
 
@@ -17,7 +18,9 @@ func SendDataToServer(data map[string]Utils.Resource, targetName string, serverU
 	conf := &firebase.Config{
 		DatabaseURL: serverUrl,
 	}
-	opt := option.WithCredentialsFile("./serviceAccountKey.json")
+
+	usr, _ := user.Current()
+	opt := option.WithCredentialsFile(usr.HomeDir + "/.ssh/serviceAccountKey-taskbook.json")
 	app, err := firebase.NewApp(ctx, conf, opt)
 	if err != nil {
 		log.Fatalln("Error initializing app:", err)

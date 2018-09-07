@@ -1,9 +1,19 @@
 package Utils
 
+
+import (
+  "os/user"
+)
+
 var Tag string = "Sync"
 var FirebaseProject string = "sync-00000"
 var ServerUrl string = "https://%s.firebaseio.com"
 
+
+func GetAccountPathFileKey() string{
+  usr, _ := user.Current()
+  return usr.HomeDir + "/.ssh/serviceAccountKey-taskbook.json"
+}
 
 
 type Resource struct {

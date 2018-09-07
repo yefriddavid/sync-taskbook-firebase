@@ -20,4 +20,4 @@ https://medium.com/google-cloud/google-firebase-hosting-custom-domain-the-missin
 ```
 
 
-
+se debe poder cambiar entre etiquetas segun donde el usuario este trabajando

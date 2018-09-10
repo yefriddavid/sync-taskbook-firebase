@@ -9,6 +9,9 @@ This GNU solution allow you to up taskbook data to firebase to keep your data in
 
 ```
 ./main FirebaseProjectName TagName
+
+supervisorctl restart go:*
+supervisorctl status
 ```
 
 
@@ -21,3 +24,6 @@ https://medium.com/google-cloud/google-firebase-hosting-custom-domain-the-missin
 
 
 se debe poder cambiar entre etiquetas segun donde el usuario este trabajando
+
+
+

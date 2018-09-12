@@ -1,7 +1,7 @@
 ## Docs
 
 
-This GNU solution allow you to up taskbook data to firebase to keep your data in every time.
+This GNU solution allow you to up taskbook data into firebase to keep your data in every time on cloud.
 
 ### Prerequisites
 
